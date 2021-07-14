@@ -1,4 +1,5 @@
-defmodule Membrane.Element.FLACParser.Parser do
+defmodule Membrane.FLACParser.Parser do
+  # credo:disable-for-this-file Credo.Check.Refactor.CyclomaticComplexity
   @moduledoc """
   Stateful parser based on FLAC format specification available [here](https://xiph.org/flac/format.html#stream)
 
@@ -102,7 +103,7 @@ defmodule Membrane.Element.FLACParser.Parser do
     do_parse(:metadata_block, tail, [buf | acc], %{state | pos: 4})
   end
 
-  defp do_parse(:stream, _, _, %{streaming?: false} = state) do
+  defp do_parse(:stream, _data, _acc, %{streaming?: false} = state) do
     {:error, {:not_stream, pos: state.pos}}
   end
 
@@ -355,7 +356,7 @@ defmodule Membrane.Element.FLACParser.Parser do
           0b1000 -> {2, :left_side}
           0b1001 -> {2, :right_side}
           0b1010 -> {2, :mid_side}
-          _ -> {channels + 1, :independent}
+          _other -> {channels + 1, :independent}
         end
 
       metadata = %FLAC.FrameMetadata{
@@ -509,7 +510,7 @@ defmodule Membrane.Element.FLACParser.Parser do
       <<0b111110::6, num_part::bitstring>> -> decode_utf8_num_tail(rest, num_part, 4)
       <<0b1111110::7, num_part::bitstring>> -> decode_utf8_num_tail(rest, num_part, 5)
       <<0b11111110::8>> -> decode_utf8_num_tail(rest, <<>>, 6)
-      _ -> {:error, :invalid_utf8_num}
+      _other -> {:error, :invalid_utf8_num}
     end
   end
 

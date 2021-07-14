@@ -3,11 +3,12 @@ defmodule ParsingPipeline do
 
   alias Membrane.Testing.Pipeline
 
+  @spec make_pipeline(String.t(), String.t(), boolean(), pid()) :: GenServer.on_start()
   def make_pipeline(in_path, out_path, streaming?, pid \\ self()) do
     Pipeline.start_link(%Pipeline.Options{
       elements: [
         file_src: %Membrane.File.Source{location: in_path},
-        parser: %Membrane.Element.FLACParser{streaming?: streaming?},
+        parser: %Membrane.FLACParser{streaming?: streaming?},
         sink: %Membrane.File.Sink{location: out_path}
       ],
       test_process: pid
@@ -15,7 +16,7 @@ defmodule ParsingPipeline do
   end
 end
 
-defmodule Membrane.Element.FLACParser.IntegrationTest do
+defmodule Membrane.FLACParser.IntegrationTest do
   use ExUnit.Case
   import Membrane.Testing.Assertions
   alias Membrane.Pipeline

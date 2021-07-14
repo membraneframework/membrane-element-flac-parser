@@ -1,19 +1,19 @@
-defmodule Membrane.Element.FLACParser.MixProject do
+defmodule Membrane.FLACParser.Plugin.MixProject do
   use Mix.Project
 
   @version "0.5.0"
-  @github_url "https://github.com/membraneframework/membrane-element-flac-parser"
+  @github_url "https://github.com/membraneframework/membrane_flac_parser_plugin"
 
   def project do
     [
-      app: :membrane_element_flac_parser,
+      app: :membrane_flac_parser_plugin,
       version: @version,
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      description: "Membrane Multimedia Framework (FlacParser Element)",
+      description: "Plugin for parsing FLAC encoded audio stream",
       package: package(),
-      name: "Membrane Element: FlacParser",
+      name: "Membrane FlacParser plugin",
       source_url: @github_url,
       docs: docs(),
       homepage_url: "https://membraneframework.org",
@@ -33,9 +33,9 @@ defmodule Membrane.Element.FLACParser.MixProject do
   defp docs do
     [
       main: "readme",
-      extras: ["README.md"],
+      extras: ["README.md", "LICENSE"],
       source_ref: "v#{@version}",
-      nest_modules_by_prefix: [Membrane.Element.FLACParser],
+      nest_modules_by_prefix: [Membrane.FLACParser],
       before_closing_head_tag: &sidebar_fix/1
     ]
   end
@@ -67,6 +67,7 @@ defmodule Membrane.Element.FLACParser.MixProject do
       {:membrane_caps_audio_flac, "~> 0.1.1"},
       {:crc, "~> 0.10.1"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
+      {:credo, "~> 1.4", only: :dev, runtime: false},
       {:dialyxir, "~> 1.1.0", only: :dev, runtime: false},
       {:membrane_file_plugin, "~> 0.6.0", only: :test}
     ]

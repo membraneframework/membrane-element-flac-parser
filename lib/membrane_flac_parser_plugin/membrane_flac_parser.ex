@@ -1,13 +1,13 @@
-defmodule Membrane.Element.FLACParser do
+defmodule Membrane.FLACParser do
   @moduledoc """
   An element parsing FLAC encoded audio stream.
 
-  Wraps `Membrane.Element.FLACParser.Parser`, see its docs for more info.
+  Wraps `Membrane.FLACParser.Parser`, see its docs for more info.
   """
   use Membrane.Filter
   alias Membrane.Caps.Audio.FLAC
   alias Membrane.Buffer
-  alias Membrane.Element.FLACParser.Parser
+  alias Membrane.FLACParser.Parser
 
   @initial_demand 1024
 

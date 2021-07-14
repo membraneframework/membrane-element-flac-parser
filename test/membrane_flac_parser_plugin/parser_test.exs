@@ -1,8 +1,8 @@
-defmodule Membrane.Element.FLACParser.ParserTest do
+defmodule Membrane.FLACParser.ParserTest do
   use ExUnit.Case, async: true
   alias Membrane.Buffer
   alias Membrane.Caps.Audio.FLAC
-  alias Membrane.Element.FLACParser.Parser
+  alias Membrane.FLACParser.Parser
 
   defp fixture(file) do
     Path.join([__DIR__, "../fixtures/", file])
@@ -85,7 +85,7 @@ defmodule Membrane.Element.FLACParser.ParserTest do
 
     assert {:ok, last_buf} = Parser.flush(state)
 
-    assert state.pos + byte_size(last_buf.payload) == 71189
+    assert state.pos + byte_size(last_buf.payload) == 71_189
 
     parsed_file = Enum.map_join(bufs ++ [last_buf], fn %Buffer{payload: payload} -> payload end)
     assert reference_data == parsed_file
